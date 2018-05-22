@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<title>  </title>
+CSV File Upload
+<head>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+	  </script>
+
+</head>
+<body>
+
+<p> Please click on the button below to browse and display content </p>
+	
+<input type="file" value="Browse" id="buttonid" multiple />
+<output id="list"></output>
+
+<script>
+
+
+// Check for the various File API support.
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  // Great success! All the File APIs are supported.
+} else {
+  alert('The File APIs are not fully supported in this browser.');
+}
+
+
+
+	function readCsvFile(file) 
+                                //insert javascript code(string)to read the csv file before you click and upload
+												
+		return "file contents"; {
+	
+	}
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+				  readCsvFile(f), 
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>'; // writes any list items made  to the page
+  }
+
+  document.getElementById('buttonid').addEventListener('change', handleFileSelect, false);
+
+
+    </script>
+
+
+</body>
+
+<html>
+
