@@ -3,18 +3,36 @@
 <title>  </title>
 CSV File Upload
 <head>
+   <meta charset="utf-8">
   <script src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous">
-	  </script>
-
+      crossorigin="anonymous"></script>
+      
 </head>
 <body>
+
+<script src="d3.min.js?v=3.2.8"></script>
+
 
 <p> Please click on the button below to browse and display content </p>
 	
 <input type="file" value="Browse" id="buttonid" multiple />
 <output id="list"></output>
+
+
+<style>
+table {
+        border-collapse: collapse;
+        border: 2px black solid;
+        font: 12px sans-serif;
+            }
+
+            td {
+                border: 1px black solid;
+                padding: 5px;
+            }
+
+</style>
 
 <script>
 
@@ -29,7 +47,21 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 
 	function readCsvFile(file) 
-                                //insert javascript code(string)to read the csv file before you click and upload
+        d3.text("name.csv", function() {
+                var parsedCSV = d3.csv.parseRows(data);
+
+                var container = d3.select("body")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+            });                        //insert javascript code(string)to read the csv file before you click and upload
 												
 		return "file contents"; {
 	
