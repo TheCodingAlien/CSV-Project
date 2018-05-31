@@ -16,23 +16,31 @@ CSV File Upload
 
 <p> Please click on the button below to browse and display content </p>
 	
-<input type="file" value="Browse" id="buttonid" multiple />
+<input type="file" value="Browse" id="buttonid" onclick="generate_table()" /> <!-- onlcik added to generate table on same click -->
 <output id="list"></output>
+
+<table id="myTable">
+  <tr>
+    <td>cell 1</td>
+    <td>cell 2</td>
+    <td>cell 3</td>
+    <td>cell 4</td>
+  </tr>
+</table>
 
 
 <style>
-table {
+#myTable {
         border-collapse: collapse;
         border: 2px black solid;
         font: 12px sans-serif;
             }
 
-            td {
-                border: 1px black solid;
-                padding: 5px;
-            }
-
 </style>
+
+
+
+ 
 
 <script>
 
@@ -46,7 +54,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 
 
-	function readCsvFile(file) 
+	function generate_table()         //insert javascript code(string)to read the csv file before you click and upload
         d3.text("name.csv", function() {
                 var parsedCSV = d3.csv.parseRows(data);
 
@@ -61,11 +69,13 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                         .data(function(d) { return d; }).enter()
                         .append("td")
                         .text(function(d) { return d; });
-            });                        //insert javascript code(string)to read the csv file before you click and upload
+            });                        
 												
 		return "file contents"; {
 	
 	}
+
+    var body                           //reference table output with JavaScript
 
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
