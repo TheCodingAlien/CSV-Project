@@ -7,98 +7,63 @@ CSV File Upload
   <script src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
-      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.8/d3.min.js"></script>
 </head>
 <body>
 
-<script src="d3.min.js?v=3.2.8"></script>
+  <p> Please click on the button below to browse and display content </p>
+  <input type="file" value="Browse" id="buttonid" /> <!-- onlcik added to generate table on same click -->
+  <table id="my-table"></table>
 
-
-<p> Please click on the button below to browse and display content </p>
-	
-<input type="file" value="Browse" id="buttonid" onclick="generate_table()" /> <!-- onlcik added to generate table on same click -->
-<output id="list"></output>
-
-<table id="myTable">
-  <tr>
-    <td>cell 1</td>
-    <td>cell 2</td>
-    <td>cell 3</td>
-    <td>cell 4</td>
-  </tr>
-</table>
-
-
-<style>
-#myTable {
-        border-collapse: collapse;
-        border: 2px black solid;
-        font: 12px sans-serif;
-            }
-
-</style>
-
-
-
- 
-
-<script>
-
-
-// Check for the various File API support.
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-  // Great success! All the File APIs are supported.
-} else {
-  alert('The File APIs are not fully supported in this browser.');
-}
-
-
-
-	function generate_table()         //insert javascript code(string)to read the csv file before you click and upload
-        d3.text("name.csv", function() {
-                var parsedCSV = d3.csv.parseRows(data);
-
-                var container = d3.select("body")
-                    .append("table")
-
-                    .selectAll("tr")
-                        .data(parsedCSV).enter()
-                        .append("tr")
-
-                    .selectAll("td")
-                        .data(function(d) { return d; }).enter()
-                        .append("td")
-                        .text(function(d) { return d; });
-            });                        
-												
-		return "file contents"; {
-	
-	}
-
-    var body                           //reference table output with JavaScript
-
-  function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
-
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                  f.size, ' bytes, last modified: ',
-                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-				  readCsvFile(f), 
-                  '</li>');
+  <style>
+    table{
+      border-collapse: collapse;
+      font: 12px sans-serif;
     }
-    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>'; // writes any list items made  to the page
-  }
+    td {
+      border: 2px black solid;
+      padding: 0.2em 1em;
+      margin: 2em 0;
+    }
+  </style>
+  <script>
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Great success! All the File APIs are supported.
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
 
-  document.getElementById('buttonid').addEventListener('change', handleFileSelect, false);
+    function generate_table(data) {
+      var parsedCSV = d3.csv.parseRows(data);
+      var container = d3.select("#my-table")
+        .selectAll("tr")
+        .data(parsedCSV).enter()
+        .append("tr")
+        .selectAll("td")
+        .data(function(d) { return d; }).enter()
+        .append("td")
+        .text(function(d) { return d; });
+    }
 
+    function processFile(file) {
+      var reader = new FileReader();
+      reader.onload = function() {
+        generate_table(reader.result);
+      }
+      reader.readAsText(file);
+    }
 
-    </script>
+    function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+      if (files.length) {
+          processFile(files[0]);
+      }
+    }
 
+    document.getElementById('buttonid').addEventListener('change', handleFileSelect, false);
+  </script>
 
 </body>
-
 <html>
 
