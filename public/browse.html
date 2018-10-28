@@ -1,69 +1,108 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<title>  </title>
-CSV File Upload
+<title> CSV File Upload </title>
+
 <head>
-   <meta charset="utf-8">
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.8/d3.min.js"></script>
+    <h1>CSV File Upload</h1>
+    <meta charset="utf-8">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.8/d3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+    <p> Please click on the button below to browse and display content </p>
+    <input type="file" value="Browse" id="buttonid" /> <!-- onlcik added to generate table on same click -->
+    <button onclick="myFunction()"i class="fa fa-repeat"></button>
+    <table id="my-table"></table>
 
-  <p> Please click on the button below to browse and display content </p>
-  <input type="file" value="Browse" id="buttonid" /> <!-- onlcik added to generate table on same click -->
-  <table id="my-table"></table>
 
-  <style>
-    table{
-      border-collapse: collapse;
-      font: 12px sans-serif;
-    }
-    td {
-      border: 2px black solid;
-      padding: 0.2em 1em;
-      margin: 2em 0;
-    }
-  </style>
-  <script>
-    // Check for the various File API support.
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      // Great success! All the File APIs are supported.
-    } else {
-      alert('The File APIs are not fully supported in this browser.');
-    }
 
-    function generate_table(data) {
-      var parsedCSV = d3.csv.parseRows(data);
-      var container = d3.select("#my-table")
-        .selectAll("tr")
-        .data(parsedCSV).enter()
-        .append("tr")
-        .selectAll("td")
-        .data(function(d) { return d; }).enter()
-        .append("td")
-        .text(function(d) { return d; });
-    }
+    <style>
+        #my-table {
+            font-family: "Georgia";
+            border-collapse: collapse;
+            width: 50%;
+        }
 
-    function processFile(file) {
-      var reader = new FileReader();
-      reader.onload = function() {
-        generate_table(reader.result);
-      }
-      reader.readAsText(file);
-    }
+            #my-table td, #my-table th {
+                border: 1px solid #ddd;
+                padding: 5px;
+            }
 
-    function handleFileSelect(evt) {
-      var files = evt.target.files; // FileList object
-      if (files.length) {
-          processFile(files[0]);
-      }
-    }
+            #my-table tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        p {
+         
+            font-family: "Georgia";
+        }
+            h1 {
+                font-family: "Georgia";
+            }
+            #my-table tr:hover {
+                background-color: #ddd;
+            }
 
-    document.getElementById('buttonid').addEventListener('change', handleFileSelect, false);
-  </script>
 
+        table {
+            border-collapse: collapse;
+            font: 12px Georgia;
+           margin: 20px;
+          
+        }
+
+        td {
+            border: 2px black solid;
+           
+        }
+
+        button {
+        }
+    </style>
+    <script>
+        // Check for the various File API support.
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            // Great success! All the File APIs are supported.
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+
+        function generate_table(data) {
+            var parsedCSV = d3.csv.parseRows(data);
+            var container = d3.select("#my-table")
+                .selectAll("tr")
+                .data(parsedCSV).enter()
+                .append("tr")
+                .selectAll("td")
+                .data(function (d) { return d; }).enter()
+                .append("td")
+                .text(function (d) { return d; });
+        }
+
+        function processFile(file) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                generate_table(reader.result);
+            }
+            reader.readAsText(file);
+        }
+
+        function handleFileSelect(evt) {
+            var files = evt.target.files; // FileList object
+            if (files.length) {
+                processFile(files[0]);
+            }
+        }
+
+        document.getElementById('buttonid').addEventListener('change', handleFileSelect, false);
+
+        function myFunction() {
+            location.reload();
+        }
+
+    </script>
 </body>
 <html>
 
