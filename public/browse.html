@@ -3,7 +3,6 @@
 <title> CSV File Upload </title>
 
 <head>
-    <h1>CSV File Upload</h1>
     <meta charset="utf-8">
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -12,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+	  <div id="wrap"> <!--makes a reference to the entire body -->
+	<h2>Online CSV File Uploader</h2>
     <p> Please click on the button below to browse and display content </p>
     <input type="file" value="Browse" id="buttonid" /> <!-- onlcik added to generate table on same click -->
     <button onclick="myFunction()"i class="fa fa-repeat"></button>
@@ -20,46 +21,51 @@
 
 
     <style>
-        #my-table {
-            font-family: "Georgia";
-            border-collapse: collapse;
-            width: 50%;
-        }
+       #wrap  {
+    width:800px;
+    margin: 0 auto;
+    margin: 0;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 
-            #my-table td, #my-table th {
-                border: 1px solid #ddd;
-                padding: 5px;
+   }  */centering webpage https://www.w3.org/Style/Examples/007/center.en.html */
+
+
+   body {
+    text-align: center;
+   } */centering webpage */
+
+
+   	#my-table {
+       font-family: "Georgia";
+       border-collapse: collapse;
+       width: 50%;
+        }
+  	#my-table td, #my-table th {
+        border: 1px solid #ddd;
+        padding: 5px;
             }
+	#my-table tr:nth-child(even) {
+	    background-color: #f2f2f2;
+          	}
+    table{
+      border-collapse: collapse;
+      font: 12px sans-serif;
+      font-family: Georgia;
 
-            #my-table tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-        p {
-         
-            font-family: "Georgia";
-        }
-            h1 {
-                font-family: "Georgia";
-            }
-            #my-table tr:hover {
-                background-color: #ddd;
-            }
-
-
-        table {
-            border-collapse: collapse;
-            font: 12px Georgia;
-           margin: 20px;
-          
-        }
-
-        td {
-            border: 2px black solid;
-           
-        }
-
-        button {
-        }
+    }
+    td {
+      border: 2px black solid;
+      padding: 0.2em 1em;
+      margin: 2em 0;
+      font-family: Georgia;
+    }
+    p {
+      font-family: Georgia;
+    }
     </style>
     <script>
         // Check for the various File API support.
